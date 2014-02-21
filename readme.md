@@ -14,4 +14,4 @@ https://github.com/cpliakas/git-wrapper
 ### Roadmap
 
 
-[![Build Status](https://travis-ci.org/alnutile/behat-wrapper.png?branch=master)](https://travis-ci.org/alnutile/behat-wrapper)
+[![Build Status](https://travis-ci.org/alnutile/behat-wrapper.png?branch=develop)](https://travis-ci.org/alnutile/behat-wrapper)
