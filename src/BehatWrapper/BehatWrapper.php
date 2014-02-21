@@ -95,6 +95,11 @@ class BehatWrapper
             $event = new Event\BehatOutputEvent($wrapper, $process, $command, $type, $buffer);
             $wrapper->getDispatcher()->dispatch(Event\BehatEvents::BEHAT_OUTPUT, $event);
         });
+        return $this->getOutput($process);
+    }
+
+    public function getOutput($process)
+    {
         return $process->getOutput();
     }
 

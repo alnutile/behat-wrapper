@@ -1,6 +1,7 @@
 <?php namespace BehatWrapper\Test;
 
 use BehatWrapper\BehatCommand;
+use BehatWrapper\BehatException;
 use BehatWrapper\BehatWrapper;
 use BehatWrapper\Test\Event\TestDispatcher;
 
@@ -27,21 +28,23 @@ class BehatWrapperTest extends BehatWrapperTestCase {
         $this->assertEquals('Behat version DEV', $version);
     }
 
-    public function testBehatCommandError()
+    /**
+     * @expectedException \BehatWrapper\BehatException
+     */
+    public function testBehatCommandError($catchException = false)
     {
-        var_dump($this->runBadCommand());
+        $this->wrapper->behat('--what');
     }
 
-    public function runBadCommand($catchException = false)
+    public function testBehatRun()
     {
-        try {
-            $this->wrapper->behat('--what');
-        } catch (BehatException $e) {
-            var_dump("Is this being thrown 1");
-            if (!$catchException) {
-                throw $e;
-            }
-        }
+        $testpath = $this->testfilepath;
+        $command = BehatCommand::getInstance();
+        $command->setOption('config', $this->behatyml);
+        $command->setTestPath($testpath);
+        $output = $this->wrapper->run($command);
+        $this->assertContains('5 passed', $output);
     }
+
 }
  
