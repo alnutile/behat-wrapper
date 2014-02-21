@@ -13,6 +13,14 @@ class BehatCommand {
 
     protected $command = '';
 
+    protected $options = array();
+
+    /**
+     * Path to behat minus the file name behat
+     *
+     * @var string|null
+     */
+    protected $directory;
     /**
      * Command line arguments passed to the Behat command.
      *
@@ -31,14 +39,8 @@ class BehatCommand {
      */
     protected function __construct($args)
     {
-        /**
-         * the last item in the array is the test path
-         */
-        $testpath = array_pop($args);
-
 
         if ($args) {
-            // Pass all other method arguments as the Behat command arguments.
             foreach ($args as $arg) {
                 $this->addArgument($arg);
             }
@@ -184,6 +186,12 @@ class BehatCommand {
     public function getTestPath()
     {
         return $this->testpath;
+    }
+
+    public function setDirectory($directory)
+    {
+        $this->directory = $directory;
+        return $this;
     }
 
 }
