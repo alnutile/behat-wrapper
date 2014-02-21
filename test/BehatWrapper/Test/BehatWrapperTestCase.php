@@ -39,9 +39,6 @@ class BehatWrapperTestCase extends \PHPUnit_Framework_TestCase
         $path = $path . '/features/test.feature';
         $this->testfilepath = $path;
         $this->behatyml = $behat_yml;
-
-
-
     }
 
     /**
@@ -61,5 +58,15 @@ class BehatWrapperTestCase extends \PHPUnit_Framework_TestCase
         return $listener;
     }
 
+    public function runBadCommand($catchException = false)
+    {
+        try {
+            $this->wrapper->behat('--what');
+        } catch (BehatException $e) {
+            if (!$catchException) {
+                throw $e;
+            }
+        }
+    }
 
 }

@@ -103,6 +103,16 @@ class BehatWrapper
         return $process->getOutput();
     }
 
+
+    /**
+     * Mostly for testing
+     */
+    public function version()
+    {
+        return $this->behat('--version');
+    }
+
+
     /**
      * Gets the dispatcher used by this library to dispatch events.
      *
