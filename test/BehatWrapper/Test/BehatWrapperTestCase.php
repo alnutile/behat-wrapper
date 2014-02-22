@@ -17,6 +17,10 @@ class BehatWrapperTestCase extends \PHPUnit_Framework_TestCase
      */
     protected $filesystem;
 
+    protected $behatyml;
+
+    protected $testfilepath;
+
     /**
      * @var \BehatWrapper\BehatWrapper
      */
@@ -26,6 +30,15 @@ class BehatWrapperTestCase extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
         $this->wrapper = new BehatWrapper();
+
+        $path = dirname( __FILE__ );
+        $path = explode("/", $path);
+        $path = array_slice($path, 0, -2);
+        $path = implode("/", $path);
+        $behat_yml = $path . '/behat.yml';
+        $path = $path . '/features/test.feature';
+        $this->testfilepath = $path;
+        $this->behatyml = $behat_yml;
     }
 
     /**
@@ -45,5 +58,15 @@ class BehatWrapperTestCase extends \PHPUnit_Framework_TestCase
         return $listener;
     }
 
+    public function runBadCommand($catchException = false)
+    {
+        try {
+            $this->wrapper->behat('--what');
+        } catch (BehatException $e) {
+            if (!$catchException) {
+                throw $e;
+            }
+        }
+    }
 
 }

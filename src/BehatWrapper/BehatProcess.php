@@ -48,7 +48,6 @@ class BehatProcess extends Process
             } else {
                 $dispatcher->dispatch(Event\BehatEvents::BEHAT_ERROR, $event);
                 throw new BehatException($this->getErrorOutput());
-                //throw new \RuntimeException($this->getErrorOutput());
             }
         } catch (\RuntimeException $e) {
             $dispatcher->dispatch(Event\BehatEvents::BEHAT_ERROR, $event);
