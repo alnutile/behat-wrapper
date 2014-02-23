@@ -72,4 +72,12 @@ class FeatureContext extends BehatContext
             );
         }
     }
+
+    /**
+     * @when /^I wait$/
+     */
+    public function iWait()
+    {
+        sleep(5);
+    }
 }
