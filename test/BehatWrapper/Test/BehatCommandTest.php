@@ -29,6 +29,30 @@ class BehatCommandTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $commandLine);
     }
 
+    public function testUnsetFlag()
+    {
+        $behat = BehatCommand::getInstance()
+            ->setOption('format', 'pretty')
+            ->setFlag('version')
+            ->setTestPath($this->path);
+        $behat->unsetFlag('version');
+        $expected = "--format='pretty' $this->path";
+        $commandLine = $behat->getCommandLine();
+        $this->assertEquals($expected, $commandLine);
+    }
+
+    public function testUnsetOption()
+    {
+        $behat = BehatCommand::getInstance()
+            ->setOption('format', 'pretty')
+            ->setFlag('version')
+            ->setTestPath($this->path);
+        $behat->unsetOption('format');
+        $expected = "--version $this->path";
+        $commandLine = $behat->getCommandLine();
+        $this->assertEquals($expected, $commandLine);
+    }
+
 
 }
  

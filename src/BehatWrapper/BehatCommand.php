@@ -86,6 +86,12 @@ class BehatCommand {
         return $this;
     }
 
+    public function unsetOption($option)
+    {
+        unset($this->options[$option]);
+        return $this;
+    }
+
     /**
      * Sets multiple command line options.
      *
@@ -101,6 +107,8 @@ class BehatCommand {
         }
         return $this;
     }
+
+
 
     /**
      * Returns Behat command being run
@@ -146,6 +154,10 @@ class BehatCommand {
         return $this->setOption($option, true);
     }
 
+    public function unsetFlag($option)
+    {
+        return $this->unsetOption($option);
+    }
 
     /**
      * Builds the command line options for use in the Behat command.
