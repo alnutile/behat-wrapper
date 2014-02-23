@@ -15,21 +15,20 @@ class BehatProcess extends Process
      */
     protected $command;
 
+    protected $cwd;
+
     /**
      * Constructs a BehatProcess object.
      *
      * @param \BehatWrapper\BehatWrapper $behat
      * @param \BehatWrapper\BehatCommand $command
+     * @param working directory
      */
     public function __construct(BehatWrapper $behat, BehatCommand $command, $cwd = null)
     {
         $this->behat = $behat;
         $this->command = $command;
-
-        // Build the command line options, flags, and arguments.
-        $binary = ProcessUtils::escapeArgument($behat->getBehatBinary());
-        $commandLine = rtrim($binary . ' ' . $command->getCommandLine());
-        parent::__construct($commandLine, $cwd, null, null, $behat->getTimeout(), array());
+        $this->cwd = $cwd;
     }
 
     /**
@@ -37,11 +36,12 @@ class BehatProcess extends Process
      */
     public function run($callback = null)
     {
+
         $event = new Event\BehatEvent($this->behat, $this, $this->command);
         $dispatcher = $this->behat->getDispatcher();
-
         try {
             $dispatcher->dispatch(Event\BehatEvents::BEHAT_PREPARE, $event);
+            $this->prepare($this->behat, $this->command, $this->cwd);
             parent::run($callback);
             if ($this->isSuccessful()) {
                 $dispatcher->dispatch(Event\BehatEvents::BEHAT_SUCCESS, $event);
@@ -53,5 +53,13 @@ class BehatProcess extends Process
             $dispatcher->dispatch(Event\BehatEvents::BEHAT_ERROR, $event);
             throw new BehatException($e->getMessage());
         }
+    }
+
+    public function prepare(BehatWrapper $behat, BehatCommand $command, $cwd = null)
+    {
+        // Build the command line options, flags, and arguments.
+        $binary = ProcessUtils::escapeArgument($behat->getBehatBinary());
+        $commandLine = rtrim($binary . ' ' . $command->getCommandLine());
+        parent::__construct($commandLine, $cwd, null, null, $behat->getTimeout(), array());
     }
 }
