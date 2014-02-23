@@ -218,4 +218,26 @@ class BehatWrapper
         $path = $path . '/bin/';
         return $path;
     }
+
+    /**
+     * Set whether or not to stream real-time output to STDOUT and STDERR.
+     *
+     * @param boolean $streamOutput
+     *
+     * @return \BehatWrapper\BehatWrapper
+     */
+    public function streamOutput($streamOutput = true)
+    {
+        if ($streamOutput && !isset($this->streamListener)) {
+            $this->streamListener = new Event\BehatOutputStreamListener();
+            $this->addOutputListener($this->streamListener);
+        }
+
+        if (!$streamOutput && isset($this->streamListener)) {
+            $this->removeOutputListener($this->streamListener);
+            unset($this->streamListener);
+        }
+
+        return $this;
+    }
 }
