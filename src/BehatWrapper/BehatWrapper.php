@@ -240,4 +240,36 @@ class BehatWrapper
 
         return $this;
     }
+
+    /**
+     * Adds output listener.
+     *
+     * @param \BehatWrapper\Event\BehatOutputListenerInterface $listener
+     *
+     * @return \BehatWrapper\BehatWrapper
+     */
+    public function addOutputListener(Event\BehatOutputListenerInterface $listener)
+    {
+        $this
+            ->getDispatcher()
+            ->addListener(Event\BehatEvents::BEHAT_OUTPUT, array($listener, 'handleOutput'))
+        ;
+        return $this;
+    }
+
+    /**
+     * Removes an output listener.
+     *
+     * @param \BehatWrapper\Event\BehatOutputListenerInterface $listener
+     *
+     * @return \BehatWrapper\BehatWrapper
+     */
+    public function removeOutputListener(Event\BehatOutputListenerInterface $listener)
+    {
+        $this
+            ->getDispatcher()
+            ->removeListener(Event\BehatEvents::BEHAT_OUTPUT, array($listener, 'handleOutput'))
+        ;
+        return $this;
+    }
 }
