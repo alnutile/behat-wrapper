@@ -8,6 +8,7 @@ namespace BehatWrapper\Event;
  */
 class BehatOutputStreamListener implements BehatOutputListenerInterface
 {
+
     public function handleOutput(BehatOutputEvent $event)
     {
         $handler = $event->isError() ? STDERR : STDOUT;

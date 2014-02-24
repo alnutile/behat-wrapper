@@ -98,6 +98,17 @@ class BehatWrapper
         return $this->getOutput($process);
     }
 
+    public function start(BehatCommand $command, $cwd = null)
+    {
+        $wrapper = $this;
+        $process = new BehatProcess($this, $command, $cwd);
+        $process->start(function ($type, $buffer) use ($wrapper, $process, $command) {
+            $event = new Event\BehatOutputEvent($wrapper, $process, $command, $type, $buffer);
+            $wrapper->getDispatcher()->dispatch(Event\BehatEvents::BEHAT_OUTPUT, $event);
+        });
+        return $process;
+    }
+
     public function getOutput($process)
     {
         return $process->getOutput();

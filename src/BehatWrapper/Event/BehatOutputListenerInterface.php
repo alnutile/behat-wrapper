@@ -7,5 +7,6 @@ namespace BehatWrapper\Event;
  */
 interface BehatOutputListenerInterface
 {
+
     public function handleOutput(BehatOutputEvent $event);
 }
