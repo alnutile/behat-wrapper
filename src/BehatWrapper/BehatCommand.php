@@ -39,8 +39,15 @@ class BehatCommand {
      */
     protected function __construct($args)
     {
-
         if ($args) {
+            $this->command = array_shift($args);
+
+            $options = end($args);
+            if (is_array($options)) {
+                $this->setOptions($options);
+                array_pop($args);
+            }
+
             foreach ($args as $arg) {
                 $this->addArgument($arg);
             }

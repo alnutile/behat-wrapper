@@ -55,6 +55,15 @@ class BehatProcess extends Process
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function start($callback = null)
+    {
+        $this->prepare($this->behat, $this->command, $this->cwd);
+        parent::start($callback);
+    }
+
     public function prepare(BehatWrapper $behat, BehatCommand $command, $cwd = null)
     {
         // Build the command line options, flags, and arguments.

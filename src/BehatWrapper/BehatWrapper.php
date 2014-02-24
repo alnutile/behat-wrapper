@@ -98,6 +98,17 @@ class BehatWrapper
         return $this->getOutput($process);
     }
 
+    public function start(BehatCommand $command, $cwd = null)
+    {
+        $wrapper = $this;
+        $process = new BehatProcess($this, $command, $cwd);
+        $process->start(function ($type, $buffer) use ($wrapper, $process, $command) {
+            $event = new Event\BehatOutputEvent($wrapper, $process, $command, $type, $buffer);
+            $wrapper->getDispatcher()->dispatch(Event\BehatEvents::BEHAT_OUTPUT, $event);
+        });
+        return $process;
+    }
+
     public function getOutput($process)
     {
         return $process->getOutput();
@@ -238,6 +249,38 @@ class BehatWrapper
             unset($this->streamListener);
         }
 
+        return $this;
+    }
+
+    /**
+     * Adds output listener.
+     *
+     * @param \BehatWrapper\Event\BehatOutputListenerInterface $listener
+     *
+     * @return \BehatWrapper\BehatWrapper
+     */
+    public function addOutputListener(Event\BehatOutputListenerInterface $listener)
+    {
+        $this
+            ->getDispatcher()
+            ->addListener(Event\BehatEvents::BEHAT_OUTPUT, array($listener, 'handleOutput'))
+        ;
+        return $this;
+    }
+
+    /**
+     * Removes an output listener.
+     *
+     * @param \BehatWrapper\Event\BehatOutputListenerInterface $listener
+     *
+     * @return \BehatWrapper\BehatWrapper
+     */
+    public function removeOutputListener(Event\BehatOutputListenerInterface $listener)
+    {
+        $this
+            ->getDispatcher()
+            ->removeListener(Event\BehatEvents::BEHAT_OUTPUT, array($listener, 'handleOutput'))
+        ;
         return $this;
     }
 }
