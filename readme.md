@@ -11,7 +11,7 @@ https://github.com/cpliakas/git-wrapper
 
 #### Live Demo
 
-http://behat-wrapper.eu1.frbit.net/
+http://behat-wrapper.alfrednutile.info/
 
 #### Tests
 
