@@ -115,6 +115,11 @@ class BehatCommand {
         return $this;
     }
 
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
 
 
     /**

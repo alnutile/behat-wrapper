@@ -91,6 +91,7 @@ class BehatWrapper
     {
         $wrapper = $this;
         $process = new BehatProcess($this, $command, $cwd);
+
         $process->run(function ($type, $buffer) use ($wrapper, $process, $command) {
             $event = new Event\BehatOutputEvent($wrapper, $process, $command, $type, $buffer);
             $wrapper->getDispatcher()->dispatch(Event\BehatEvents::BEHAT_OUTPUT, $event);
@@ -197,6 +198,17 @@ class BehatWrapper
     }
 
     /**
+     * Set the timeout in seconds
+     * @param $seconds
+     * @return int
+     */
+    public function setTimeout($seconds)
+    {
+        $this->timeout = $seconds;
+        return $this;
+    }
+
+    /**
      * Sets the options passed to proc_open() when executing the Behat command.
      *
      * @param array $options
@@ -249,6 +261,17 @@ class BehatWrapper
             unset($this->streamListener);
         }
 
+        return $this;
+    }
+
+
+    /**
+     * @param \BehatWrapper\Event\BehatPrepareListenerInterface $listener
+     * @return \BehatWrapper\BehatWrapper
+     */
+    public function addPrepareListener(Event\BehatPrepareListenerInterface $listener) {
+        $this->getDispatcher()
+             ->addListener(Event\BehatEvents::BEHAT_PREPARE, array($listener, 'handlePrepare'));
         return $this;
     }
 
