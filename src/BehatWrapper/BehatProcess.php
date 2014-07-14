@@ -37,7 +37,7 @@ class BehatProcess extends Process
     public function run($callback = null)
     {
 
-        $event = new Event\BehatEvent($this->behat, $this, $this->command);
+        $event = new Event\BehatPrepareEvent($this->behat, $this, $this->command);
         $dispatcher = $this->behat->getDispatcher();
         try {
             $dispatcher->dispatch(Event\BehatEvents::BEHAT_PREPARE, $event);
