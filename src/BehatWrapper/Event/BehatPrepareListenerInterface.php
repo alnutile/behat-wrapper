@@ -8,5 +8,5 @@ namespace BehatWrapper\Event;
 interface BehatPrepareListenerInterface
 {
 
-    public function handlePrepare(BehatEvent $event);
+    public function handlePrepare(BehatPrepareEvent $event);
 }
