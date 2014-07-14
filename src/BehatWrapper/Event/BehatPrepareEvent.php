@@ -40,6 +40,6 @@ class BehatPrepareEvent extends BehatEvent
 
     public function getOptions()
     {
-        return "Options time";
+        return $this->command->getOptions();
     }
 }
