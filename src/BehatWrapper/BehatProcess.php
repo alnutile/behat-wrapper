@@ -60,6 +60,10 @@ class BehatProcess extends Process
      */
     public function start($callback = null)
     {
+        $event = new Event\BehatPrepareEvent($this->behat, $this, $this->command);
+        $dispatcher = $this->behat->getDispatcher();
+        $dispatcher->dispatch(Event\BehatEvents::BEHAT_PREPARE, $event);
+
         $this->prepare($this->behat, $this->command, $this->cwd);
         parent::start($callback);
     }
