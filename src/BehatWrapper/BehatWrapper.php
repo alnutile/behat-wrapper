@@ -5,6 +5,7 @@ use Symfony\Component\Process\ExecutableFinder;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
+
 class BehatWrapper
 {
 
@@ -288,6 +289,38 @@ class BehatWrapper
         $this
             ->getDispatcher()
             ->addListener(Event\BehatEvents::BEHAT_OUTPUT, array($listener, 'handleOutput'))
+        ;
+        return $this;
+    }
+
+    /**
+     * Adds success listener.
+     *
+     * @param \BehatWrapper\Event\BehatErrorListenerInterface $listener
+     *
+     * @return \BehatWrapper\BehatWrapper
+     */
+    public function addErrorListener(Event\BehatErrorListenerInterface $listener)
+    {
+        $this
+            ->getDispatcher()
+            ->addListener(Event\BehatEvents::BEHAT_ERROR, array($listener, 'handleError'))
+        ;
+        return $this;
+    }
+
+    /**
+     * Adds success listener.
+     *
+     * @param \BehatWrapper\Event\BehatSuccessListenerInterface $listener
+     *
+     * @return \BehatWrapper\BehatWrapper
+     */
+    public function addSuccessListener(Event\BehatSuccessListenerInterface $listener)
+    {
+        $this
+            ->getDispatcher()
+            ->addListener(Event\BehatEvents::BEHAT_SUCCESS, array($listener, 'handleSuccess'))
         ;
         return $this;
     }
