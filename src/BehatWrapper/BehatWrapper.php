@@ -145,12 +145,11 @@ class BehatWrapper
     /**
      * Sets the dispatcher used by this library to dispatch events.
      *
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher
-     *   The Symfony event dispatcher object.
+     * @param $dispatcher
      *
      * @return \BehatWrapper\BehatWrapper
      */
-    public function setDispatcher(EventDispatcherInterface $dispatcher)
+    public function setDispatcher($dispatcher)
     {
         $this->dispatcher = $dispatcher;
         return $this;
