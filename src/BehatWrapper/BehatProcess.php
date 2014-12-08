@@ -73,6 +73,7 @@ class BehatProcess extends Process
         // Build the command line options, flags, and arguments.
         $binary = ProcessUtils::escapeArgument($behat->getBehatBinary());
         $commandLine = rtrim($binary . ' ' . $command->getCommandLine());
-        parent::__construct($commandLine, $cwd, null, null, $behat->getTimeout(), array());
+        //600 replaced as I trouble shoot an issue $behat->getTimeout() 
+        parent::__construct($commandLine, $cwd, null, null, 600, array());
     }
 }
