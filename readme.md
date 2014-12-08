@@ -17,6 +17,7 @@ http://behat-wrapper.alfrednutile.info/
 
 The test folder shows some examples of usage and expectations.
 
-
+#### Packagist 
+https://packagist.org/packages/alnutile/behat-wrapper
 
 [![Build Status](https://travis-ci.org/alnutile/behat-wrapper.png?branch=develop)](https://travis-ci.org/alnutile/behat-wrapper)
